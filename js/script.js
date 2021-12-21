@@ -6,7 +6,7 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 //VARIABLE DECLARATION
-let fallNotes =  []; //falling notes array
+let fallNotes =  []; //falling notes array // array must be maximum 14
 let drawKeyPads = [];
 let frames = 0;
 let score = 0;
@@ -14,8 +14,10 @@ let lives = 3;
 let keyP = [] //keyPads
 let livesLeft = []; //lives left in game
 let randomNotesX = [33, 113, 193,485,565,645]
-let song = [30]
-let twinkleStar = 'AABBCCD'
+let song = [30, 50]
+let twinkleStar = 'AABBCCDEEFFGGH' 
+let randomColorX = ["red"]
+let songSpeed = 17; //set interval set to 17
 
 let keypadKeys = [65, 83, 68, 74, 74, 76]
 //AUDIOS
@@ -120,6 +122,7 @@ livesLeft.push(
 )
 
 //FUNCTIONS & stuff
+//4++ squares drawn intially
 
 let count = 0
 function draw(){
@@ -130,17 +133,14 @@ function draw(){
     })
     
     song.forEach(songNote => {
+        count++
         if (songNote === 30){
         if (frames % songNote === 0) { 
             fallNotes.push(new Notes(shuffleNote(randomNotesX), 0, 25, 25, "orange")) 
         }
-        } else if (songNote === 120){
-            if (frames % songNote === 0) { 
-                fallNotes.push(new Notes(shuffleNote(randomNotesX), 0, 25, 25, "white")) 
-            } 
-        }
-        
+        } 
     })
+
    
     fallNotes.forEach(n => {
         n.drawNotes()
@@ -154,25 +154,38 @@ function draw(){
     fallNotes.forEach(noteScore => {
         if(noteScore.notePos() === 330) {
             playSong()
-            console.log(noteScore)
+            //console.log(noteScore)
             //clearInterval(myInterval)
         }
     })
+    
 }
 
 let z = -1;
-
+let len = song.length - 1
 function playSong(){
+    len++
+    console.log(len + " test")
+    console.log(fallNotes.length)
     z++
     let keyNote = twinkleStar.charAt(z)
     twinkle.play()
     if (keyNote === "D") {
         //twinkle.pause()
+        sleep(800)
+    } if (keyNote === "H"){
         clearInterval(myInterval)
-    } if (z > 9){
-        
     }
 }
+
+function sleep(pause){
+    const date = Date.now()
+    let currentDate = null;
+    do {
+        currentDate = Date.now()
+    } while (currentDate - date < pause);
+}
+
 
 
 function randomIntFromInterval(min, max){
@@ -201,6 +214,7 @@ function clicked(){
     fallNotes.forEach(noteScore => {
         if(noteScore.notePos() > 330 && noteScore.notePos() < 380) {
            score++
+           //add coding to delay a second click
         } 
     })  
 
@@ -296,12 +310,17 @@ document.addEventListener("keyup", (e) => {
     }
 })
 
+
+
 // LOAD START BUTTON (TEST)
 window.onload = function() {
+    ctx.fillStyle = "white"
+    ctx.fillRect(300, 200, 100, 50)
+    
     document.getElementById("start-button").onclick = function() {
       document.getElementById("start-button").disabled = true;  
       startGame();
-      myInterval = setInterval(startGame, 17);
+      myInterval = setInterval(startGame, songSpeed);
     }; 
 }
 
