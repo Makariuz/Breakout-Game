@@ -14,7 +14,7 @@ let lives = 3;
 let keyP = [] //keyPads
 let livesLeft = []; //lives left in game
 let randomNotesX = [33, 113, 193,485,565,645]
-let song = [30, 50]
+let song = [30]
 let twinkleStar = 'AABBCCDEEFFGGH' 
 let randomColorX = ["red"]
 let songSpeed = 17; //set interval set to 17
@@ -48,9 +48,11 @@ class Keypad {
         this.color = color;
     }
     drawKeys(){
+       
         ctx.lineWidth = 4;
         ctx.strokeStyle = this.color
         ctx.strokeRect(this.x, this.y, this.width, this.height)
+       
     }
 
     top() {
@@ -77,7 +79,10 @@ class Notes {
     drawNotes(){
         this.move();
         ctx.fillStyle = this.color;
+
         ctx.fillRect(this.x, this.y, this.width, this.height)
+        
+        
     }
 
     notePos(){
@@ -121,9 +126,10 @@ livesLeft.push(
     new Health(400, canvas.height - 70, "burlywood"),
 )
 
+
 //FUNCTIONS & stuff
 //4++ squares drawn intially
-
+//skip 11
 let count = 0
 function draw(){
     frames++
@@ -131,17 +137,15 @@ function draw(){
     keyP.forEach(k => {
         k.drawKeys()
     })
-    
-    song.forEach(songNote => {
-        count++
-        if (songNote === 30){
-        if (frames % songNote === 0) { 
-            fallNotes.push(new Notes(shuffleNote(randomNotesX), 0, 25, 25, "orange")) 
-        }
-        } 
-    })
 
    
+    if (frames % 30 === 0) { 
+        if (fallNote.indexOf())
+        fallNotes.push(new Notes(shuffleNote(randomNotesX), 0, 25, 25, "orange"))
+    }
+
+    //add a note that is wrong color
+    
     fallNotes.forEach(n => {
         n.drawNotes()
     });
@@ -159,22 +163,26 @@ function draw(){
         }
     })
     
+ console.log(fallNotes)
 }
 
 let z = -1;
 let len = song.length - 1
 function playSong(){
     len++
-    console.log(len + " test")
-    console.log(fallNotes.length)
+ /*    if (len === 6) {
+        fallNotes.push(new Notes(shuffleNote(randomNotesX), 0, 25, 25, "white"))
+        
+    } */
+    
     z++
     let keyNote = twinkleStar.charAt(z)
     twinkle.play()
     if (keyNote === "D") {
         //twinkle.pause()
-        sleep(800)
+      //  sleep(800)
     } if (keyNote === "H"){
-        clearInterval(myInterval)
+        //clearInterval(myInterval)
     }
 }
 
