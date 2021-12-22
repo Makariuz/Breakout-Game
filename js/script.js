@@ -16,7 +16,7 @@ let livesLeft = []; //lives left in game
 let randomNotesX = [33, 113, 193,485,565,645]
 let song = [30]
 let twinkleStar = 'AABBCCDEEFFGGH' 
-let randomColorX = ["red"]
+let randomColorX = ["burlywood", "white", "yellow", "blue", "purple", "orange"]
 let songSpeed = 17; //set interval set to 17
 
 let keypadKeys = [65, 83, 68, 74, 74, 76]
@@ -129,25 +129,28 @@ livesLeft.push(
 
 //FUNCTIONS & stuff
 //4++ squares drawn intially
-//skip 11
+
 let count = 0
+
 function draw(){
     frames++
     //draw the keyPad
     keyP.forEach(k => {
         k.drawKeys()
     })
-
-   
-    if (frames % 30 === 0) { 
-        if (fallNote.indexOf())
-        fallNotes.push(new Notes(shuffleNote(randomNotesX), 0, 25, 25, "orange"))
-    }
-
+    
+        if (frames % 30 === 0) { 
+         fallNotes.push(new Notes(shuffleNote(randomNotesX), 0, 25, 25, shuffleNote(randomColorX)))
+      
+         }
+        
     //add a note that is wrong color
     
     fallNotes.forEach(n => {
+        if(fallNotes.indexOf(n) === 7) return
+        if(fallNotes.indexOf(n) > 14) return
         n.drawNotes()
+        
     });
     livesLeft.forEach(h => {
         h.drawLives()
