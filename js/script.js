@@ -48,11 +48,9 @@ class Keypad {
         this.color = color;
     }
     drawKeys(){
-       
         ctx.lineWidth = 4;
         ctx.strokeStyle = this.color
         ctx.strokeRect(this.x, this.y, this.width, this.height)
-       
     }
 
     top() {
@@ -85,8 +83,11 @@ class Notes {
         
     }
 
-    notePos(){
+    notePosY(){
         return this.y
+    }
+    notePosX(){
+        return this.x
     }
 }
 
@@ -144,13 +145,11 @@ function draw(){
       
          }
         
-    //add a note that is wrong color
-    
+    //skip one iteration and when song is over
     fallNotes.forEach(n => {
         if(fallNotes.indexOf(n) === 7) return
         if(fallNotes.indexOf(n) > 14) return
         n.drawNotes()
-        
     });
     livesLeft.forEach(h => {
         h.drawLives()
@@ -159,36 +158,26 @@ function draw(){
         clearInterval(myInterval)
     }
     fallNotes.forEach(noteScore => {
-        if(noteScore.notePos() === 330) {
+        if(noteScore.notePosY() === 330) {
             playSong()
             //console.log(noteScore)
             //clearInterval(myInterval)
         }
     })
     
- console.log(fallNotes)
 }
 
 let z = -1;
 let len = song.length - 1
 function playSong(){
     len++
- /*    if (len === 6) {
-        fallNotes.push(new Notes(shuffleNote(randomNotesX), 0, 25, 25, "white"))
-        
-    } */
-    
     z++
-    let keyNote = twinkleStar.charAt(z)
+    //let keyNote = twinkleStar.charAt(z)
     twinkle.play()
-    if (keyNote === "D") {
-        //twinkle.pause()
-      //  sleep(800)
-    } if (keyNote === "H"){
-        //clearInterval(myInterval)
-    }
 }
 
+
+/// DELAY FUNCTION for testing or future timer
 function sleep(pause){
     const date = Date.now()
     let currentDate = null;
@@ -216,25 +205,31 @@ function gameScore(){
     ctx.fillText(score, 350, 100);
 }
 
+
 //check if its a clickable score
 function clicked(){
-    let point = fallNotes[0].y
-    let kP = keyP[0].y
-    console.log(`value of keyPad is: ${kP} and the value of note is: ${point}.`)
+    //compare Y to position of note when falling
 
+    
+    if (fallNotes.length <= 0 || fallNotes.length >= 50) return
+   
     fallNotes.forEach(noteScore => {
-        if(noteScore.notePos() > 330 && noteScore.notePos() < 380) {
-           score++
-           //add coding to delay a second click
-        } 
-    })  
-
-/*     fallNotes.forEach(missedNote => {
-        if(missedNote.notePos() < 330 && missedNote.notePos() > 380){
+        if(noteScore.notePosY() > 320 && noteScore.notePosY() < 410) {
+            score++
+            //clearInterval(myInterval)
+        } else {
             lifeLeft()
         }
-    }) */
+    })
+}
+
+function checkClick(){
+    console.log("test")
+
     
+
+    clicked()
+
 }
 
 function unClicked(){
@@ -243,15 +238,12 @@ function unClicked(){
 }
 
 function lifeLeft(){
-    lives -= 1
-   // fallNotes.shift()
-    livesLeft.shift()
+    if(lifeLeft.length > 0){
+    livesLeft.pop()
+    console.log(livesLeft)
+}
     //console.log(lives)
-    if (lives === 0) {
-        livesLeft.shift()
-        alert("haha you lost")
-        clearInterval(myInterval)
-    }
+  
 }
 
 function stop(){
@@ -262,30 +254,33 @@ function stop(){
 
 //EVENT LISTENERS
 document.addEventListener("keydown", (e) => {
+    e.preventDefault();
+  
+  if (e.repeat) clearInterval(myInterval)
     switch(e.keyCode){
         case 65:
             keyP.push(new Keypad(20, canvas.height - 70, "red"))
-            clicked()
+            checkClick()
         break;
         case 83:
             keyP.push(new Keypad(100, canvas.height - 70, "red"))
-            clicked()
+            checkClick()
         break;
         case 68:
             keyP.push(new Keypad(180, canvas.height - 70, "red"))
-            clicked()
+            checkClick()
         break;
         case 74:
             keyP.push(new Keypad(470, canvas.height - 70, "red"))
-            clicked()
+            checkClick()
         break;
         case 75:
             keyP.push(new Keypad(550, canvas.height - 70, "red"))
-            clicked()
+            checkClick()
         break;
         case 76:
             keyP.push(new Keypad(630, canvas.height - 70, "red"))
-            clicked()
+            checkClick()
         break;
            
     }
