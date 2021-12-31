@@ -1,25 +1,107 @@
-div {
-    background-color: white;
-    width: 100vw;
-    height: 100vh;
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;500&family=Press+Start+2P&display=swap');
+
+
+body{
+    margin: 0;
+    padding: 0;
+    background-image:url(../images/bg4.jpg);
+    background-repeat:repeat; 
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image:url(../images/bg3.jpeg);
-    background-repeat:repeat;
+
+}
+
+*{
+    font-family: 'Press Start 2P';
+    
+}
+.gameContainer {
+    display:block;
+}
+
+.gameDiv {
+    background-color: transparent;
+    width: 700px;
+    height: 400px;
+}
+.gameTitle {
+    background-color: transparent;
+    width: 700px;
+    height: 100px;
+    text-align: center;
+    font-size: x-large;
 }
 
 #gameCanvas {
+    position: absolute;
     background-color: lightgrey;
     background-image:url(../images/bg2.png);
     background-repeat:repeat;
     background-size: 700px 400px;
+}
+
+#start-button{
+    position: absolute;
+    cursor: pointer;
+    margin-top: 180px;
+    margin-left: 250px;
+    padding: 20px 50px;
+    background-color: wheat;
+    border-radius: 5px;  
+}
+
+#start-button:hover{
+    background-color: whitesmoke;
 
 }
 
-body{
-    background-image:url(../images/bg3.jpeg);
+#restart-button{
+    position: relative;
+    cursor: pointer;
+    margin-top: 90px;
+    padding: 20px 50px;
+    border-radius: 5px;
+}
+#restart-button:hover{
+    background-color: yellow;
+}
+
+@keyframes gameOver {
+    0%   {color: red;}
+    100% {color: yellow;}
+    0%   {color: red;}
+}
+
+.game-over-page {
+    display:none;
+    position:relative;
+  
+    background-image:url(../images/bg2.png);
     background-repeat:repeat;
-    
+    height: 400px;
+    width: 700px;
+    background-color: lightgrey;
+    text-align: center;
+    font-size: larger;
+  
+  }
+
+
+.game-over-page h1{
+    color:red;
+    text-shadow: 10px 5px darkred;
+    animation-name: gameOver;
+    animation-duration: .5s;
+    animation-iteration-count: infinite;
 }
+
+
+  .game-over-page p{
+    font-size: medium;
+    margin:100px 0 0px 0px;
+    color: white;
+}
+
+

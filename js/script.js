@@ -1,5 +1,11 @@
-//IDs
+//BUTTONS
 const startBtn = document.getElementById("start-button");
+const restartBtn = document.getElementById("restart-button");
+
+//QUERY SELECTORS
+const gameOverPage = document.querySelector(".game-over-page");
+const startPage = document.querySelector(".gameContainer")
+
 
 //BUILDING CANVAS
 const canvas = document.getElementById("gameCanvas");
@@ -18,12 +24,15 @@ let song = [30]
 let twinkleStar = 'AABBCCDEEFFGGH' 
 let randomColorX = ["burlywood", "white", "yellow", "blue", "purple", "orange"]
 let songSpeed = 17; //set interval set to 17
-
+let countdown = 5;
 let keypadKeys = [65, 83, 68, 74, 74, 76]
+let gameO = []
 //AUDIOS
 
 let twinkle = new Audio()
-twinkle.src = "/sound/twinklez.m4a"
+twinkle.src = "/sound/twinkle2.mp3"
+let Cnote = new Audio()
+Cnote.src = "/sound/Cnote.mp3"
 
 //STYLES
 
@@ -52,7 +61,6 @@ class Keypad {
         ctx.strokeStyle = this.color
         ctx.strokeRect(this.x, this.y, this.width, this.height)
     }
-
     top() {
         return this.y;
     }
@@ -71,16 +79,15 @@ class Notes {
       }
     
     move(){
+        
         this.y -= this.speedY;
+        
     }
     
     drawNotes(){
         this.move();
         ctx.fillStyle = this.color;
-
-        ctx.fillRect(this.x, this.y, this.width, this.height)
-        
-        
+        ctx.fillRect(this.x, this.y, this.width, this.height)   
     }
 
     notePosY(){
@@ -88,6 +95,13 @@ class Notes {
     }
     notePosX(){
         return this.x
+    }
+
+    coordenates(){
+        return (" this is X: " + this.x + " ---- THIS IS Y: " + this.y)
+    }
+    bottom(){
+        return this.y + this.height;
     }
 }
 
@@ -104,13 +118,10 @@ class Health {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.healthX, this.healthY, this.width, this.height)
     }
-  
-    
 }
 
 
 //ARRAY KEY PUSH to KEYPADS
-
 keyP.push(
     new Keypad(20, canvas.height - 70, "white"),
     new Keypad(100, canvas.height - 70, "white"),
@@ -120,51 +131,67 @@ keyP.push(
     new Keypad(canvas.width - 150, canvas.height - 70, "white"),
     new Keypad(canvas.width - 230, canvas.height - 70, "white")
 )
-
 livesLeft.push(
-    new Health(280, canvas.height - 70, "burlywood"),
-    new Health(340, canvas.height - 70, "burlywood"),
-    new Health(400, canvas.height - 70, "burlywood"),
+    new Health(260, canvas.height - 70, "burlywood"),
+    new Health(320, canvas.height - 70, "burlywood"),
+    new Health(405, canvas.height - 70, "burlywood"),
 )
-
 
 //FUNCTIONS & stuff
 //4++ squares drawn intially
 
 let count = 0
-
+let rightNote = 1;
 function draw(){
     frames++
     //draw the keyPad
     keyP.forEach(k => {
-        k.drawKeys()
+        k.drawKeys()  
     })
-    
-        if (frames % 30 === 0) { 
+    if (frames % 30 === 0) { 
          fallNotes.push(new Notes(shuffleNote(randomNotesX), 0, 25, 25, shuffleNote(randomColorX)))
-      
-         }
+    }
         
     //skip one iteration and when song is over
     fallNotes.forEach(n => {
         if(fallNotes.indexOf(n) === 7) return
         if(fallNotes.indexOf(n) > 14) return
+        //if(n.notePosY() === 300) console.log(n.notePosY() + " and X is " + n.notePosX() + " so the cordinates are: " + n.coordenates())
+        if(n.bottom() === 331 && n.notePosX() === 33) {
+            console.log("test")
+        }
         n.drawNotes()
     });
+
     livesLeft.forEach(h => {
         h.drawLives()
     })
-    if (frames > 800){
-        clearInterval(myInterval)
+
+    if (frames === 600) {
+        gameOver()
     }
+
+    
     fallNotes.forEach(noteScore => {
         if(noteScore.notePosY() === 330) {
             playSong()
             //console.log(noteScore)
             //clearInterval(myInterval)
         }
+        if(noteScore.notePosX() === 33 && noteScore.notePosY() === 330){
+           // console.log(testCount++)
+        }
     })
-    
+
+    ctx.font = "30px Outfit"
+    ctx.fillStyle = "white"
+    ctx.fillText('SCORE', 295, 50);
+    ctx.font = "30px Outfit"
+    ctx.fillStyle = "white"
+    ctx.fillText(score, 345, 90);
+    ctx.fillText(lives, 345, 150)
+ 
+   
 }
 
 let z = -1;
@@ -187,7 +214,6 @@ function sleep(pause){
 }
 
 
-
 function randomIntFromInterval(min, max){
     return Math.floor(Math.random()*(max-min+1)+min);
 } 
@@ -197,38 +223,109 @@ function shuffleNote(randomNote){
 }
 
 function gameScore(){
-    ctx.font = "30px Arial"
+    ctx.font = "30px Outfit"
     ctx.fillStyle = "white"
-    ctx.fillText('SCORE', 300, 50);
-    ctx.font = "30px Arial"
+    ctx.fillText('SCORE', 295, 50);
+    ctx.font = "30px Press-Start-2P"
     ctx.fillStyle = "white"
-    ctx.fillText(score, 350, 100);
+    ctx.fillText(score, 345, 100);
+    ctx.fillText(lives, 345, 150)
 }
 
-
 //check if its a clickable score
-function clicked(){
-    //compare Y to position of note when falling
 
+//clickEach
+
+function clickA(){
+    fallNotes.forEach(notes => {
+        if(notes.bottom() >= 300 &&
+        notes.bottom() <= 400 &&
+        notes.notePosX() === 33
+        ) {score++} 
+        if (notes.bottom() <= 300 &&
+        notes.notePosX() === 33 || notes.bottom() === 0 && notes.notePosX() === 33) {lives--}
+    })
+}
+function clickS(){
     
-    if (fallNotes.length <= 0 || fallNotes.length >= 50) return
-   
-    fallNotes.forEach(noteScore => {
-        if(noteScore.notePosY() > 320 && noteScore.notePosY() < 410) {
-            score++
-            //clearInterval(myInterval)
-        } else {
-            lifeLeft()
-        }
+    fallNotes.forEach(notes => {
+        if(notes.bottom() >= 300 &&
+        notes.bottom() <= 400 &&
+        notes.notePosX() === 113
+        ) score++
     })
 }
 
-function checkClick(){
-    console.log("test")
+
+function clickD(){
+
+    fallNotes.forEach(notes => {
+        if(notes.bottom() >= 300 &&
+        notes.bottom() <= 400 &&
+        notes.notePosX() === 193
+        ) score++
+    })
+    
+}
+
+
+function clickJ(){
+    fallNotes.forEach(notes => {
+        if(notes.bottom() >= 300 &&
+        notes.bottom() <= 400 &&
+        notes.notePosX() === 485
+        ) score++
+    })
+    
+}
+
+function clickK(){
+
+    fallNotes.forEach(notes => {
+        if(notes.bottom() >= 300 &&
+        notes.bottom() <= 400 &&
+        notes.notePosX() === 565
+        ) score++
+    })
+    
+}
+
+function clickL(){
+
+    fallNotes.forEach(notes => {
+        if(notes.bottom() >= 300 &&
+        notes.bottom() <= 400 &&
+        notes.notePosX() === 645
+        ) score++
+    })
+    
+}
+
+
+function clicked(){
+    //compare Y to position of note when falling)
+
+    if (fallNotes.length <= 0 || fallNotes.length >= 50) return
+
+
+    fallNotes.forEach(noteA => {
+        if(noteA.bottom() >= 300 &&
+        noteA.bottom() <= 400 &&
+        noteA.notePosX() === 33
+        ) score++
+        if(noteA.bottom() >= 300 &&
+        noteA.bottom() <= 400 &&
+        noteA.notePosX() === 113
+        ) score++
+    })
 
     
 
+}
+
+function checkClick(){
     clicked()
+    //run lifeLeft
 
 }
 
@@ -238,12 +335,9 @@ function unClicked(){
 }
 
 function lifeLeft(){
-    if(lifeLeft.length > 0){
-    livesLeft.pop()
     console.log(livesLeft)
-}
-    //console.log(lives)
-  
+    lives = lives - 1
+   
 }
 
 function stop(){
@@ -251,6 +345,53 @@ function stop(){
         clearInterval(myInterval)
     }
 }
+
+
+let tim = 5
+
+
+// LOAD START BUTTON (TEST)
+window.onload = function() {
+    document.getElementById("start-button").onclick = function() {
+     // document.getElementById("start-button").disabled = true;
+      document.getElementById("start-button").hidden = true;
+      startGame();
+      myInterval = setInterval(startGame, songSpeed);
+    }; 
+}
+
+startBtn.onload = function(){
+    console.log("button loaded")
+}
+
+
+//gamecountdown
+let seconds = 11;
+
+function countDown(){
+        
+    for(let i = 11; i <= 0; i--){
+        console.log(i)
+    }
+}
+
+
+
+
+
+//START BUTTON (TEST)
+
+
+
+
+function startGame(){  
+    ctx.clearRect(0, 0, canvas.width, canvas.height); 
+    draw();
+    //gameOver();
+}
+
+
+
 
 //EVENT LISTENERS
 document.addEventListener("keydown", (e) => {
@@ -260,27 +401,29 @@ document.addEventListener("keydown", (e) => {
     switch(e.keyCode){
         case 65:
             keyP.push(new Keypad(20, canvas.height - 70, "red"))
-            checkClick()
+            clickA()
         break;
         case 83:
             keyP.push(new Keypad(100, canvas.height - 70, "red"))
-            checkClick()
+            clickS()
         break;
         case 68:
             keyP.push(new Keypad(180, canvas.height - 70, "red"))
-            checkClick()
+            clickD()
         break;
         case 74:
             keyP.push(new Keypad(470, canvas.height - 70, "red"))
-            checkClick()
+            clickJ()
         break;
         case 75:
             keyP.push(new Keypad(550, canvas.height - 70, "red"))
-            checkClick()
+            clickK()
+          
         break;
         case 76:
             keyP.push(new Keypad(630, canvas.height - 70, "red"))
-            checkClick()
+            clickL()
+         
         break;
            
     }
@@ -312,36 +455,24 @@ document.addEventListener("keyup", (e) => {
             keyP.push(new Keypad(630, canvas.height - 70, "white"))
             unClicked()
         break;
-          
     }
 })
 
 
-
-// LOAD START BUTTON (TEST)
-window.onload = function() {
-    ctx.fillStyle = "white"
-    ctx.fillRect(300, 200, 100, 50)
-    
-    document.getElementById("start-button").onclick = function() {
-      document.getElementById("start-button").disabled = true;  
-      startGame();
-      myInterval = setInterval(startGame, songSpeed);
-    }; 
+function gameOver(){
+    startPage.style.display = 'none';
+    gameOverPage.style.display = 'block';
 }
 
-//START BUTTON (TEST)
-
-
-
-
-function startGame(){
-    
-    ctx.clearRect(0, 0, canvas.width, canvas.height); 
-    draw()
-    
-    gameScore()
-
+restartBtn.onclick = function(){
+    gameOverPage.style.display = 'none';
+    startPage.style.display = 'block';
    
-    
 }
+
+startBtn.onmouseover = function(){
+    Cnote.play()
+}
+
+
+

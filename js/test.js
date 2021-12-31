@@ -330,6 +330,7 @@ window.onload = function() {
     
     document.getElementById("start-button").onclick = function() {
       document.getElementById("start-button").disabled = true;  
+      document.getElementById("start-button").hidden = true;
       startGame();
       myInterval = setInterval(startGame, songSpeed);
     }; 
@@ -350,3 +351,19 @@ function startGame(){
    
     
 }
+
+
+ctx.clearRect(0, 0, canvas.width, canvas.height); 
+ctx.fillStyle = "lightgrey";
+ctx.fillRect(100,100, 500, 200);
+ctx.font = "55px Outfit"
+ctx.fillStyle = "black";
+ctx.fillText('GAME OVER', 195, 150);
+ctx.font = "30px Outfit"
+ctx.fillStyle = "black"
+ctx.fillText("Your final score is: ", 230, 205)
+ctx.font= "40px Outfit"
+ctx.fillStyle = "purple"
+ctx.fillText(score, 475, 210)
+restartBtn.hidden = false;
+startBtn.hidden = true;
