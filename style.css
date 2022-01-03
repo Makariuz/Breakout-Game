@@ -181,6 +181,7 @@ canvas {
     margin: 50px;
     width: 700px;
     height: 400px;
+    background: rgb(221, 218, 218); 
     background-image: url("./images/bgGame.jpg");
     background-repeat: no-repeat;
     background-size: 700px 400px;
