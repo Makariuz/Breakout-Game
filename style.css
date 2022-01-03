@@ -189,7 +189,7 @@ canvas {
     border-radius: 2px;
     color:#f3ea5f;
     text-align: center;
-    padding-top: 30px;
+   
   
 }
 .winPage h2{
@@ -199,6 +199,7 @@ canvas {
     animation-duration: .5s;
     animation-iteration-count: infinite;
     color:red;
+    padding-top: 30px;
 }
 .gameOverPage h2{
     text-align: center;
