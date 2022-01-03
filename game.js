@@ -128,6 +128,10 @@ function keyUpHandler(e) {
     else if (e.keyCode === 32){
         paddleWidth = 75;
     }
+    else if (e.keyCode === 76){
+         dx = 2;
+         dy = -2;
+    }
 }
 
 
@@ -285,13 +289,11 @@ function draw() {
                    // console.log("GAME OVER");
                    click.muted = true;
                    fail.muted = true;
-                  console.log(score)
-                  scoreSpan.textContent = score;
-                 
+                  
                   controls.style.display ="none"
                   startGame.style.display = "none"
                   gameOverPage.style.display = "block"
-                  scoreSpan2.textContent = score;
+                  score <= 4 && score > 0 ? scoreSpan2.textContent = "WOW, that was an awful score: "+ score : scoreSpan2.textContent = score;
 
                 }
                 else {

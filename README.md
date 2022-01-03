@@ -10,8 +10,6 @@ brick.
 ## MVP
 MVP definition, deliverables.
 
-
-
 ## Backlog
 
 Add scoreboard;
@@ -19,8 +17,14 @@ Add levels;
 
 
 ## Data structure
-Classes and methods definition. Or functions.
 
+    draw();
+    drawBricks();
+    drawBall();
+    drawPaddle();
+    drawScore();
+    drawLives();
+    collisionDetection();
 
 ## States y States Transitions
 Definition of the different states and their transition (transition functions)
