@@ -148,7 +148,7 @@ startBtn.addEventListener("click", () => {
 
 titleSpan.addEventListener("click", () => {
     document.location.reload();
-    draw()
+    
 })
 
 restartBtn.addEventListener("click", () => {
@@ -195,7 +195,7 @@ function collisionDetection() {
                         controls.style.display ="none"
                         startGame.style.display = "none"
                         winPage.style.display = "block";
-                        scoreSpan.textContent = score;
+                        scoreSpan.textContent = score + " | Time: " + (30 - timeLeft) + "s";
                     }
                 }
             }
@@ -210,12 +210,28 @@ function drawScore() {
     ctx.fillText("Score: "+score, 8, 20);
 }
 
+function drawTimer(){
+    ctx.font = "16px Press+Start+2P";
+    ctx.fillStyle = "#f3ea5f";
+    ctx.fillText(timeLeft, 340, 20);
+}
+
+let timeLeft = 30;
+let timer = setInterval(function(){
+  if(timeLeft <= 0){
+    clearInterval(downloadTimer);
+  }
+  timeLeft -= 1;
+}, 1000);
+
 //LIVES
 function drawLives() {
     ctx.font = "16px Arial";
     ctx.fillStyle = "#f3ea5f";
     ctx.fillText("Lives: "+lives, canvas.width-65, 20);
 }
+
+
 
 //BALL
 function drawBall() {
@@ -262,6 +278,7 @@ function draw() {
     drawBall();
     drawPaddle();
     drawScore();
+    drawTimer();
     drawLives();
     collisionDetection();
 
@@ -293,7 +310,7 @@ function draw() {
                   controls.style.display ="none"
                   startGame.style.display = "none"
                   gameOverPage.style.display = "block"
-                  score <= 4 && score > 0 ? scoreSpan2.textContent = "WOW, that was an awful score: "+ score : scoreSpan2.textContent = score;
+                  score <= 4 && score > 0 ? scoreSpan2.textContent = "WOW, that was an awful score: "+ score : scoreSpan2.textContent = score + " | Time: " + (30 - timeLeft) + "s";;
 
                 }
                 else {
