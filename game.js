@@ -31,13 +31,13 @@ let id = null
 
 //AUDIOS
 let click = new Audio()
-click.src = "/sounds/click.mp3"
+click.src = "./sounds/click.mp3"
 click.volume = .2;
 let fail = new Audio()
-fail.src = "/sounds/fail.mp3"
+fail.src = "./sounds/fail.mp3"
 fail.volume = .2;
 let bgMusic = new Audio()
-bgMusic.src = "/sounds/BreakoutDemo.mp3"
+bgMusic.src = "./sounds/BreakoutDemo.mp3"
 
 //BALL POSITION AND SPEED
 let x = canvas.width/2;
