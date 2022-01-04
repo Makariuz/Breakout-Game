@@ -66,6 +66,8 @@ let brickPadding = 10;
 let brickOffsetTop = 50;
 let brickOffsetLeft = 20;
 
+//TIMER
+let timeLeft = 45;
 
 //SCORE
 let score = 0;
@@ -74,13 +76,26 @@ let score = 0;
 let lives = 3;
 
 
+//NESTED LOOP, c = COLUMNS & r = ROWS;
+
 let bricks = [];
 for(let c=0; c<brickColumnCount; c++) {
     bricks[c] = [];
     for(let r=0; r<brickRowCount; r++) {
+        //status of brick painted or not
         bricks[c][r] = { x: 0, y: 0, status: 1 };
     }
 }
+
+//TIMER
+
+let timer = setInterval(function(){
+    if(timeLeft <= 0){
+      clearInterval(timer);
+    }
+    timeLeft -= 1;
+  }, 1000);
+
 
 let randomColor = Math.floor(Math.random()*16777215).toString(16);
 
@@ -109,7 +124,6 @@ function keyDownHandler(e) {
         leftBtn.style.height = "85px";
     }
     else if (e.keyCode === 32){
-    
         paddleWidth = 175;
     }
 }
@@ -177,29 +191,37 @@ muteBtn.addEventListener("click", () => {
 
 //FUNCTIONS SECTION
 
+let hit = score
+let totalBricks = brickRowCount*brickColumnCount
+
 //COLLISION
 function collisionDetection() {
     for (let c = 0; c < brickColumnCount; c++) {
         for (let r = 0; r < brickRowCount; r++) {
+            //b = store brick object  in each loop
             let b = bricks[c][r];
+            //status of brick painted or not
             if (b.status == 1) {
                 if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
+                    console.log(totalBricks - score)
                     click.play()
-                    dy = -dy;
+                    dy = -dy; 
                     b.status = 0;
                     score++;
                     if(score == brickRowCount*brickColumnCount) {
+                        gameHalt()
                         click.muted = true;
                         fail.muted = true;
                         lives = 15
                         controls.style.display ="none"
                         startGame.style.display = "none"
                         winPage.style.display = "block";
-                        scoreSpan.textContent = score + " | Time: " + (30 - timeLeft) + "s";
+                        scoreSpan.textContent = "Score: " + score + " | Time: " + (30 - timeLeft) + "s";
                     }
                 }
             }
         }
+       
     }
 }
 
@@ -210,19 +232,15 @@ function drawScore() {
     ctx.fillText("Score: "+score, 8, 20);
 }
 
+//TIMER (DRAW)
 function drawTimer(){
     ctx.font = "16px Press+Start+2P";
     ctx.fillStyle = "#f3ea5f";
     ctx.fillText(timeLeft, 340, 20);
 }
 
-let timeLeft = 30;
-let timer = setInterval(function(){
-  if(timeLeft <= 0){
-    clearInterval(downloadTimer);
-  }
-  timeLeft -= 1;
-}, 1000);
+
+
 
 //LIVES
 function drawLives() {
@@ -230,7 +248,6 @@ function drawLives() {
     ctx.fillStyle = "#f3ea5f";
     ctx.fillText("Lives: "+lives, canvas.width-65, 20);
 }
-
 
 
 //BALL
@@ -242,7 +259,7 @@ function drawBall() {
     ctx.closePath();
 }
 
-//PADDLE
+//PADDLE (PLAYER)
 function drawPaddle() {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
@@ -256,6 +273,7 @@ function drawBricks() {
     for (let c = 0; c < brickColumnCount; c++) {
         for (let r = 0; r < brickRowCount; r++) {
             if (bricks[c][r].status == 1) {
+                //coordinates for the bricks to be created
                 let brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
                 let brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
                 bricks[c][r].x = brickX;
@@ -282,10 +300,12 @@ function draw() {
     drawLives();
     collisionDetection();
 
+    //if colides with the bottom
     if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
         dx = -dx;
         click.play()
     }
+    //if colides with the top
     if (y + dy < ballRadius) {
         dy = -dy;
         click.play()
@@ -306,11 +326,11 @@ function draw() {
                    // console.log("GAME OVER");
                    click.muted = true;
                    fail.muted = true;
-                  
+                  gameHalt()
                   controls.style.display ="none"
                   startGame.style.display = "none"
                   gameOverPage.style.display = "block"
-                  score <= 4 && score > 0 ? scoreSpan2.textContent = "WOW, that was an awful score: "+ score : scoreSpan2.textContent = score + " | Time: " + (30 - timeLeft) + "s";;
+                  score <= 4 && score > 0 ? scoreSpan2.textContent = "WOW, that was an awful score: "+ score : scoreSpan2.textContent = "Score: " + score + " | Time: " + (30 - timeLeft) + "s";;
 
                 }
                 else {
@@ -337,6 +357,6 @@ function draw() {
 }
 
 function gameHalt() {
-    cancelAnimationFrame(id)
+    window.cancelAnimationFrame(id)
 }
 

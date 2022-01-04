@@ -76,7 +76,7 @@ canvas {
   
 .close:hover,
 .close:focus {
-    color: #000;
+    color: #f3ea5f;
     text-decoration: none;
     cursor: pointer;
 }
@@ -151,7 +151,7 @@ canvas {
     color: #963bc4;
 }
 
-.startBtn:hover{
+.startBtn:hover {
     text-decoration: underline;
 }
 
@@ -249,6 +249,11 @@ canvas {
 }
 
 .restartBtn:hover{
+    background-color: yellow;
+    text-decoration: underline;
+
+}
+.restartBtn2:hover{
     background-color: yellow;
     text-decoration: underline;
 
