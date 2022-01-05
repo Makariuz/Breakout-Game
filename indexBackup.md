@@ -23,11 +23,9 @@
             <canvas id="myCanvas" width="700" height="400"></canvas>
             <button class="startBtn">START</button>
             <button class="instBtn">INSTRUCTIONS</button>
-            <button class="scoreBtn">HIGH SCORE</button>
+          <!--   <button class="scoreBtn">HIGHSCORE</button> -->
             <button class="muteBtn"> <img src="images/mute.png" alt="mute" width="30" height="30"> </button>
-            <button class="soundBtn"> <img src="images/sound.png" alt="mute" width="30" height="30"> </button>
             <span class="insertCoin">  Insert Coin</span>
-            <span class="cheatCode"> Press Spacebar to add <i>width</i> to the paddle. </span>
             </div>
 
         </div>

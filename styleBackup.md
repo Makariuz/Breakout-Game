@@ -87,7 +87,6 @@ canvas {
 
 .insertCoin{
     position: absolute;
-    cursor:grab;
     margin-left: 270px;
     margin-top: 400px;
     color: 	#f3ea5f;
@@ -97,13 +96,6 @@ canvas {
     animation-direction: forward;
 }
 
-.cheatCode {
-    display: none;
-    position: absolute;
-    margin-left: 20px;
-    margin-top: 400px;
-    color: 	#f3ea5f;
-}
 
 @keyframes insertCoin {
     0%   {
@@ -132,8 +124,8 @@ canvas {
 
 .titleGame {
     text-align: center;
-    padding-top: 65px;
-    margin-bottom: 20px;
+    padding-top: 70px;
+    margin-bottom: 35px;
     font-size: 2rem;
     color: #2bd1fc;
     text-shadow: 10px 5px darkred;
@@ -158,7 +150,7 @@ canvas {
     font-family: "Press Start 2P";
     position: absolute;
     cursor: pointer;
-    margin-top: 100px;
+    margin-top: 150px;
     margin-left: 270px;
     padding: 20px 50px;
     border-radius: 5px;  
@@ -172,27 +164,10 @@ canvas {
     animation-iteration-count: infinite;
     animation-direction: forward;
 }
-
-.startBtn:hover {
-    box-shadow: 5px 5px 16px 4px rgba(43,209,252,.2);
-}
 .muteBtn {
     position: absolute;
     cursor: pointer;
-    margin-top: 340px;
-    margin-left: 335px;
-    background-color: #2bd1fc;
-    border-radius: 5px; 
-    border-width: 3px;
-    border-color: white;
-}
-
-
-.soundBtn {
-    display:none;
-    position: absolute;
-    cursor: pointer;
-    margin-top: 340px;
+    margin-top: 310px;
     margin-left: 335px;
     background-color: #2bd1fc;
     border-radius: 5px; 
@@ -207,23 +182,9 @@ canvas {
     font-family: "Press Start 2P";
     position: absolute;
     cursor: pointer;
-    margin-top: 180px;
-    margin-left: 215px;;
+    margin-top: 230px;
+    margin-left: 220px;
     padding: 20px 50px;
-    background-color: #2bd1fc;
-    border-radius: 5px; 
-    border-width: 3px;
-    border-color: white;
-    color: #963bc4;
-}
-
-.scoreBtn {
-    font-family: "Press Start 2P";
-    position: absolute;
-    cursor: pointer;
-    margin-top: 260px;
-    margin-left: 270px;
-    padding: 20px 22px;
     background-color: #2bd1fc;
     border-radius: 5px; 
     border-width: 3px;

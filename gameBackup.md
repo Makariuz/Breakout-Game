@@ -11,7 +11,6 @@ let startGame = document.querySelector(".gameContainer")
 //BUTTONS
 
 let instBtn = document.querySelector(".instBtn")
-let scoreBtn = document.querySelector(".scoreBtn")
 let leftBtn = document.querySelector(".left")
 let rightBtn = document.querySelector(".right")
 let controls = document.querySelector(".controls")
@@ -21,14 +20,12 @@ let restartBtn = document.querySelector(".restartBtn")
 let restartBtn2 = document.querySelector(".restartBtn2")
 let closeBtn = document.querySelector(".close")
 let muteBtn = document.querySelector(".muteBtn")
-let soundBtn = document.querySelector(".soundBtn")
 
 //SPANS
 let titleSpan = document.querySelector(".titleSpan")
 let scoreSpan = document.querySelector(".scoreSpan")
 let scoreSpan2 = document.querySelector(".scoreSpan2")
 let insertCoin = document.querySelector(".insertCoin")
-let cheatCode = document.querySelector(".cheatCode")
 
 //CANCEL ANIMATION ID (work in progress)
 let id = null
@@ -40,8 +37,8 @@ click.volume = .2;
 let fail = new Audio()
 fail.src = "./sounds/fail.mp3"
 fail.volume = .2;
-let bgMusic = new Audio()
-bgMusic.src = "./sounds/BreakoutDemo.mp3"
+//let bgMusic = new Audio()
+//bgMusic.src = "./sounds/BreakoutDemo.mp3"
 
 //BALL POSITION AND SPEED
 let x = canvas.width/2;
@@ -72,7 +69,6 @@ let brickOffsetLeft = 20;
 
 //TIMER
 let timeLeft = 45;
-let timeLeftCheat = 3;
 
 //SCORE
 let score = 0;
@@ -99,8 +95,6 @@ let timer = setInterval(function(){
     }
     timeLeft -= 1;
   }, 1000);
-
-
 
 /* 
 let randomColor = Math.floor(Math.random()*16777215).toString(16);
@@ -159,11 +153,8 @@ function keyUpHandler(e) {
 startBtn.addEventListener("click", () => {
     startBtn.hidden = true
     muteBtn.hidden = true
-    scoreBtn.hidden = true
     controls.style.display ="block"
     insertCoin.style.display ="none"
-    timer = 45
-
     if (instPage.style.display = "none"){
         instBtn.hidden = true
     }
@@ -173,12 +164,14 @@ startBtn.addEventListener("click", () => {
 
 titleSpan.addEventListener("click", () => {
     document.location.reload();
+    
 })
 
 
 
 restartBtn.addEventListener("click", () => {
     document.location.reload();
+   
     draw()
 })
 
@@ -197,73 +190,8 @@ instBtn.addEventListener("click", () => {
 })
 
 muteBtn.addEventListener("click", () => {
-    muteBtn.hidden = true;
-    soundBtn.style.display = "block";
-    bgMusic.pause()
+    bgMusic.muted = true;
 })
-
-soundBtn.addEventListener("click", () => {
-    muteBtn.hidden = false;
-    soundBtn.style.display = "none";
-    bgMusic.play();
-})
-
-/* insertCoin.addEventListener("click", () => {
-    
-    if (cheatCode.style.display = "block") {  
-        insertCoin.style.display = "none"
-    } else {
-        cheatCode.style.display = "none"
-    }
-
-}) */
-
-let count = 0
-
-insertCoin.onclick = function(){
-        count++
-        if (count === 1){
-        cheatCode.style.display = "block";
-        insertCoin.style.display = "none";
-        setTimeout(function() {
-            insertCoin.style.display = "block";
-            cheatCode.style.display = "none"
-        }, 2000);
-        } else if (count === 2) {
-        cheatCode.style.display = "block";
-        cheatCode.style.marginLeft = "110px";
-        cheatCode.textContent = "Press L to slow the ball down"
-        insertCoin.style.display = "none";
-        setTimeout(function() {
-            insertCoin.style.display = "block";
-            cheatCode.style.display = "none"
-        }, 2000);
-        } else if (count >= 3){
-        cheatCode.style.display = "block";
-        cheatCode.style.marginLeft = "250px";
-        cheatCode.textContent = "No more cheats"
-        insertCoin.style.display = "none";
-        setTimeout(function() {
-            insertCoin.style.display = "block";
-            cheatCode.style.display = "none"
-        }, 2000);
-        }
-
-  
-}
-
-
-function sleep(pause){
-    const date = Date.now()
-    let currentDate = null;
-    do {
-        currentDate = Date.now()
-    } while (currentDate - date < pause);
-}
-
-
-
-
 
 //FUNCTIONS SECTION
 
@@ -312,7 +240,7 @@ function drawScore() {
 function drawTimer(){
     ctx.font = "16px Press+Start+2P";
     ctx.fillStyle = "#f3ea5f";
-    ctx.fillText(timeLeft + " " + timeLeftCheat, 340, 20);
+    ctx.fillText(timeLeft, 340, 20);
 }
 
 
