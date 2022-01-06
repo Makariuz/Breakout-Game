@@ -10,7 +10,8 @@
     <!-- styles -->
     <link href = "./style.css" rel = "stylesheet">
     <!-- favicon error -->
-    <link rel="icon" href="img/icon.svg" />
+    <link rel="shortcut icon" href="#">  <!-- chrome 2020 onwards -->
+    <link rel="shortcut icon" href="">  <!-- before chrome 2020 -->
 
   </head>
  
@@ -20,28 +21,38 @@
     </div>
         <div class="gameContainer">
             <div class="gameDiv">
-            <canvas id="myCanvas" width="700" height="400"></canvas>
+            <canvas id="myCanvas" class= "canvasClass" width="700" height="400"></canvas>
             <button class="startBtn">START</button>
             <button class="instBtn">INSTRUCTIONS</button>
-            <button class="scoreBtn">HIGH SCORE</button>
+            <!-- <button class="scoreBtn">HIGH SCORE</button> -->
             <button class="muteBtn"> <img src="images/mute.png" alt="mute" width="30" height="30"> </button>
             <button class="soundBtn"> <img src="images/sound.png" alt="mute" width="30" height="30"> </button>
             <span class="insertCoin">  Insert Coin</span>
             <span class="cheatCode"> Press Spacebar to add <i>width</i> to the paddle. </span>
             </div>
 
-        </div>
+   
 
-   <!--  <div class ="highscore">
+        </div>
+    <div class ="highscore">
+      <p><span class="close" onclick="closeModule()">&times;</span>
         <br>
           <h2>HIGH SCORE</h2>
           <br><br>
-            <li>AAAA: 9999</li>
-            <li>BBBB: 9999</li>
-    </div> -->
+          <!-- <ul class="scoreList">
+          </ul> -->
+    </div>
+
+    <div class="playerNameInput">
+      <p><span class="close" onclick="closeModule()" style= "padding-left: 270px">&times;</span>
+        <br><br>
+        <input placeholder="Please input your name" class="input" type="text">
+       <button  class="inputBtn">Add</button>
+      </p>
+    </div>
    
     <div class="instructions">
-      <p><span class="close">&times;</span>
+      <p><span class="close" onclick="closeModule()">&times;</span>
         <br><br>
         Using a single ball, must knock down as many bricks as possible by using the walls <br><br>
       or   <br><br>the paddle below to hit the ball against the bricks and eliminate them. <br><br>
@@ -51,11 +62,14 @@
     </div>
 
     <div class="winPage">
-      <h2> PERFECT SCORE </h2>
+      <h2 class ="headerWin"> </h2>
       <br><br><br>
-        <p>YOUR FINAL SCORE IS: </p>
+        <p class="winTitle"></p>
         <br><br><br>
-        <p> <span class="scoreSpan">   0  </span></p>
+        <p> <span class="scoreSpan">   0  </span>
+          <!-- <ul class="scoreList">
+          </ul> -->
+        </p>
       <div class="restartBtnContainer2">
           <button class="restartBtn2">RESTART</button>
       </div>
@@ -64,9 +78,12 @@
     <div class="gameOverPage">
         <h2> GAME OVER </h2>
         <br><br><br>
-        <p>YOUR FINAL SCORE IS: </p>
+        <p>YOUR SCORE: </p>
         <br><br><br>
-        <p> <span class="scoreSpan2">   0  </span></p>
+        <p> <span class="scoreSpan2">   0  </span>
+ <!--          <ul class="scoreList">
+          </ul> -->
+        </p>
         <div class="restartBtnContainer">
             <button class="restartBtn">RESTART</button>
         </div>
