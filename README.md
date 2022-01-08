@@ -10,10 +10,17 @@ brick.
 ## MVP
 MVP definition, deliverables.
 
+- Game has a paddle that moves horizontally; 
+- Player must position the paddle under the ball to bounce it;
+- If player misses ball, looses a life;
+- If the player misses three balls, it's game over;
+- Player must finish under 30 secs for a perfect score;
+- Added secret cheats to help;
+
 ## Backlog
 
-Add scoreboard;
-Add levels;
+- Add scoreboard;
+- Add levels;
 
 
 ## Data structure
